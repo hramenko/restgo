@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -38,6 +39,7 @@ func (server *Server) Home(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("Encoding", "application/json")
 	req.Header.Set("Authorization", "Basic R2VsaUtvbjpVQ2JKVzBuOTJHNDFDNWM=")
 
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	client := &http.Client{Timeout: 30 * time.Second}
 
 	response, err := client.Do(req)

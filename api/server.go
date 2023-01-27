@@ -26,6 +26,6 @@ func Run() {
 	//	seed.Load(server.DB)
 
 	//server.Run(os.Getenv(":8080")
-	server.Run(os.Getenv("HTTP_PORT"))
+	server.Run("0.0.0.0" + os.Getenv("HTTP_PORT"))
 
 }

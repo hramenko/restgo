@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net/http"
@@ -37,9 +38,11 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 		server.DB, err = gorm.Open(Dbdriver, DBURL)
 		if err != nil {
 			fmt.Printf("Cannot connect to %s database ", Dbdriver)
+			fmt.Printf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s \n", DbHost, DbPort, DbUser, DbName, DbPassword)
 			log.Fatal("This is the error:", err)
 		} else {
-			fmt.Printf("We are connected to the %s database", Dbdriver)
+			fmt.Printf("We are connected to the %s database \n", Dbdriver)
+			fmt.Printf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s \n", DbHost, DbPort, DbUser, DbName, DbPassword)
 		}
 	}
 
@@ -52,5 +55,6 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 
 func (server *Server) Run(addr string) {
 	fmt.Println("Listening to port " + os.Getenv("HTTP_PORT"))
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	log.Fatal(http.ListenAndServe(addr, server.Router))
 }
