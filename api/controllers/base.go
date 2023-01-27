@@ -10,12 +10,15 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 
+	//sqlite database driver
+	_ "github.com/mattn/go-sqlite3"
 	//postgres database driver
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type Server struct {
-	DB     *gorm.DB
+	DB *gorm.DB
+
 	Router *mux.Router
 }
 
