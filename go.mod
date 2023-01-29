@@ -11,6 +11,7 @@ require (
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/lib/pq v1.1.1 // indirect
 	github.com/mattn/go-sqlite3 v1.14.16 // indirect
+	github.com/rs/cors v1.8.3 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )

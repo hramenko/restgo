@@ -9,9 +9,10 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
+	"github.com/rs/cors"
 
 	//sqlite database driver
-	_ "github.com/mattn/go-sqlite3"
+	//_ "github.com/mattn/go-sqlite3"
 	//postgres database driver
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -59,5 +60,10 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 func (server *Server) Run(addr string) {
 	fmt.Println("Listening to port " + os.Getenv("HTTP_PORT"))
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-	log.Fatal(http.ListenAndServe(addr, server.Router))
+
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+	})
+
+	log.Fatal(http.ListenAndServe(addr, c.Handler(server.Router)))
 }
